@@ -15,11 +15,14 @@ function moveItemToIndex(sourceIdx: number, destIdx: number) {
     }
 };
 const LiveUpdateRankingTable: React.FC<{ items: Streamer[] }> = ({ items }) => {
-    const [displayItems, setDisplayItems] = useState(() => {
-        return [...items].sort((i1, i2) => i2.score - i1.score);
+    const [displayItems, setDisplayItems] = useState<StreamerDisplay[]>(
+        (): StreamerDisplay[] => {
+        return [...items].sort((i1, i2) => i2.score - i1.score)
+            .map((item, index) => { return { ...item, currentOrder: index } });
     });
     useEffect(() => {
-        const sortedItems = [...items].sort((i1, i2) => i2.score - i1.score);
+        const sortedItems: StreamerDisplay[] = [...items].sort((i1, i2) => i2.score - i1.score)
+            .map((item, index) => { return {...item, currentOrder: index}});
         const displayItemsWithUpdatedRankingScore = [...displayItems];
         for (let i = 0; i < sortedItems.length; i++) {
             const indexToMoveCurrentItemTo = sortedItems.findIndex(item =>
@@ -44,7 +47,8 @@ const LiveUpdateRankingTable: React.FC<{ items: Streamer[] }> = ({ items }) => {
     }, [items]);
     return <TableContainer>
         {displayItems
-            .map((item, idx) => <RankingTableRow key={item.userID} order={idx} item={item} />)}
+            .map(item => <RankingTableRow key={item.userID} order={item.currentOrder}
+                item={item} />)}
     </TableContainer>
 }
 export default LiveUpdateRankingTable;
