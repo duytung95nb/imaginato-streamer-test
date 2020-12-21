@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { SWAP_ANIMATION_DURATION_IN_SECOND } from "../../Constant/AnimationConstant";
 
 const TableContainer = styled.div<{ height?: string }>`
     height: ${props => props.height ? props.height : '500px'};
@@ -12,7 +13,11 @@ const TableContainer = styled.div<{ height?: string }>`
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);
 `;
-const TableRow = styled.div<{ top: number }>`
+const TableRow = styled.div.attrs((props: { top: number, order: number }) => {
+    return {
+        id: `TableRow_${props.order}`
+    }
+})<{ top: number, order: number }>`
     width: 90%;
     height: 50px;
     position: absolute;
@@ -30,8 +35,8 @@ const TableRow = styled.div<{ top: number }>`
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    -webkit-transition: all 0.3s ease 0s;
-    transition: all 0.3s ease 0s;
+    -webkit-transition: all ${SWAP_ANIMATION_DURATION_IN_SECOND}s ease 0s;
+    transition: all ${SWAP_ANIMATION_DURATION_IN_SECOND}s ease 0s;
     border-bottom: 1px solid #efeded;
 `;
 const OrderDisplay = styled.div<{order: number}>`

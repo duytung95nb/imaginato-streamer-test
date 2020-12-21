@@ -29,7 +29,6 @@ function StreamerList() {
             clearInterval(updateStreamerDataSourceInterval);
         }
     }, [])
-    return <LiveUpdateRankingTable items={streamerList}>
-    </LiveUpdateRankingTable>
+    return <LiveUpdateRankingTable items={streamerList} />
 }
 export default StreamerList;

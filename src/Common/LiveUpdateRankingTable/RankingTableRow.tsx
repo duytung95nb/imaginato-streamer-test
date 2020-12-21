@@ -31,7 +31,7 @@ const RankingTableRow: React.FC<{ item: Streamer, order: number }> = ({
             clearInterval(updatingNumberInterval);
         }
     }, [item]);
-    return <TableRow top={order * 50}>
+    return <TableRow top={order * 50} order={order}>
         <OrderDisplay order={order}>{order + 1}</OrderDisplay>
         <ItemImage></ItemImage>
         <ItemDisplayText>{item.displayName}</ItemDisplayText>
