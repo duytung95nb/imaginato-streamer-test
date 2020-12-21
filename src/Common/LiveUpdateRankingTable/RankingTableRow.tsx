@@ -6,7 +6,7 @@ const timeToFinishScoreUpdateInMs = 100;
 const intervalTimeToUpdateInMs = 5;
 function getIncreasingStep(scoreDiff: number): number {
     const step = Math.floor(scoreDiff / timeToFinishScoreUpdateInMs);
-    return step == 0? 1: step;
+    return step === 0? 1: step;
 }
 const RankingTableRow: React.FC<{ item: Streamer, order: number }> = ({
     order, item
@@ -14,14 +14,14 @@ const RankingTableRow: React.FC<{ item: Streamer, order: number }> = ({
     const [displayScore, setDisplayScore] = useState(item.score);
     useEffect(() => {
         const scoreDiff = item.score - displayScore;
-        if(scoreDiff == 0) { return; }
+        if(scoreDiff === 0) { return; }
         const increasingStep = getIncreasingStep(scoreDiff);
         let numberOfUpdatingInterval = 0;
         const maxUpdatingIntervalCount = timeToFinishScoreUpdateInMs / intervalTimeToUpdateInMs - 1;
         const updatingNumberInterval = setInterval(() => {
             setDisplayScore(d => d + increasingStep);
             numberOfUpdatingInterval++;
-            if (numberOfUpdatingInterval == maxUpdatingIntervalCount) {
+            if (numberOfUpdatingInterval === maxUpdatingIntervalCount) {
                 clearInterval(updatingNumberInterval)
                 setDisplayScore(item.score);
             }

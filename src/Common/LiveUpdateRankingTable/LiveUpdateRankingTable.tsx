@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Streamer, StreamerDisplay } from '../../_Models/Streamer';
+import { Streamer, StreamerViewModel } from '../../_Models/Streamer';
 import { TableContainer } from './LiveUpdateRankingTable.style';
 import RankingTableRow from './RankingTableRow';
 import { SWAP_ANIMATION_DURATION_IN_SECOND } from '../../Constant/AnimationConstant';
@@ -15,20 +15,20 @@ function moveItemToIndex(sourceIdx: number, destIdx: number) {
     }
 };
 const LiveUpdateRankingTable: React.FC<{ items: Streamer[] }> = ({ items }) => {
-    const [displayItems, setDisplayItems] = useState<StreamerDisplay[]>(
-        (): StreamerDisplay[] => {
+    const [displayItems, setDisplayItems] = useState<StreamerViewModel[]>(
+        (): StreamerViewModel[] => {
         return [...items].sort((i1, i2) => i2.score - i1.score)
             .map((item, index) => { return { ...item, currentOrder: index } });
     });
     useEffect(() => {
-        const sortedItems: StreamerDisplay[] = [...items].sort((i1, i2) => i2.score - i1.score)
+        const sortedItems: StreamerViewModel[] = [...items].sort((i1, i2) => i2.score - i1.score)
             .map((item, index) => { return {...item, currentOrder: index}});
         const displayItemsWithUpdatedRankingScore = [...displayItems];
         for (let i = 0; i < sortedItems.length; i++) {
             const indexToMoveCurrentItemTo = sortedItems.findIndex(item =>
-                item.userID == displayItems[i].userID);
+                item.userID === displayItems[i].userID);
             // No change in order
-            if (indexToMoveCurrentItemTo == i) {
+            if (indexToMoveCurrentItemTo === i) {
                 displayItemsWithUpdatedRankingScore[i] = sortedItems[indexToMoveCurrentItemTo];
                 continue;
             }

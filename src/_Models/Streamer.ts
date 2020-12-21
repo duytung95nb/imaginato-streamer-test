@@ -5,6 +5,6 @@ export interface Streamer {
     picture: string;
     score: number;
 }
-export interface StreamerDisplay extends Streamer {
+export interface StreamerViewModel extends Streamer {
     currentOrder: number;
 }
