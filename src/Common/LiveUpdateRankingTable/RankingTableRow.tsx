@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Streamer } from '../../_Models/Streamer';
 import { ItemDisplayText, ItemImage, ItemRankingScore, OrderDisplay, TableRow } from './LiveUpdateRankingTable.style';
 
-const timeToFinishScoreUpdateInMs = 100;
+const timeToFinishScoreUpdateInMs = 300;
 const intervalTimeToUpdateInMs = 5;
 function getIncreasingStep(scoreDiff: number): number {
     const step = Math.floor(scoreDiff / timeToFinishScoreUpdateInMs);
@@ -27,7 +27,6 @@ const RankingTableRow: React.FC<{ item: Streamer, order: number }> = ({
             }
         }, intervalTimeToUpdateInMs);
         return () => {
-            setDisplayScore(item.score);
             clearInterval(updatingNumberInterval);
         }
     }, [item]);
