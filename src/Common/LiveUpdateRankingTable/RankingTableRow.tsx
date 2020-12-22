@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { TABLE_ROW_HEIGHT_IN_PX } from '../../Constant/SizeConstant';
 import { Streamer } from '../../_Models/Streamer';
 import { ItemDisplayText, ItemImage, ItemRankingScore, OrderDisplay, TableRow } from './LiveUpdateRankingTable.style';
 
@@ -27,10 +28,11 @@ const RankingTableRow: React.FC<{ item: Streamer, order: number }> = ({
             }
         }, intervalTimeToUpdateInMs);
         return () => {
+            setDisplayScore(item.score);
             clearInterval(updatingNumberInterval);
         }
     }, [item]);
-    return <TableRow top={order * 50} order={order}>
+    return <TableRow order={order}>
         <OrderDisplay order={order}>{order + 1}</OrderDisplay>
         <ItemImage></ItemImage>
         <ItemDisplayText>{item.displayName}</ItemDisplayText>

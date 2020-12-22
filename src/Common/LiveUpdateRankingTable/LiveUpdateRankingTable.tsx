@@ -4,16 +4,6 @@ import { TableContainer } from './LiveUpdateRankingTable.style';
 import RankingTableRow from './RankingTableRow';
 import { SWAP_ANIMATION_DURATION_IN_SECOND } from '../../Constant/AnimationConstant';
 
-function moveItemToIndex(sourceIdx: number, destIdx: number) {
-    const sourceElement = document.getElementById(`TableRow_${sourceIdx}`);
-    const destElement = document.getElementById(`TableRow_${destIdx}`);
-    if (sourceElement && destElement) {
-        sourceElement.style.top = `${destElement.offsetTop}px`;
-        setTimeout(() => {
-            sourceElement.style.top = '';
-        }, SWAP_ANIMATION_DURATION_IN_SECOND * 1000);
-    }
-};
 const LiveUpdateRankingTable: React.FC<{ items: Streamer[] }> = ({ items }) => {
     const [displayItems, setDisplayItems] = useState<StreamerViewModel[]>(
         (): StreamerViewModel[] => {
@@ -27,18 +17,11 @@ const LiveUpdateRankingTable: React.FC<{ items: Streamer[] }> = ({ items }) => {
         for (let i = 0; i < sortedItems.length; i++) {
             const indexToMoveCurrentItemTo = sortedItems.findIndex(item =>
                 item.userID === displayItems[i].userID);
-            // No change in order
-            if (indexToMoveCurrentItemTo === i) {
-                displayItemsWithUpdatedRankingScore[i] = sortedItems[indexToMoveCurrentItemTo];
+            if(indexToMoveCurrentItemTo == -1) {
+                // remove item
                 continue;
             }
-            if (indexToMoveCurrentItemTo > -1) {
-                displayItemsWithUpdatedRankingScore[i] = sortedItems[indexToMoveCurrentItemTo];
-                moveItemToIndex(i, indexToMoveCurrentItemTo);
-            }
-            else {
-                // remove items from the list (if the array is dynamic)
-            }
+            displayItemsWithUpdatedRankingScore[i] = sortedItems[indexToMoveCurrentItemTo];
         }
         setDisplayItems(displayItemsWithUpdatedRankingScore);
         setTimeout(() => {

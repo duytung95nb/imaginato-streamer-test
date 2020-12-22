@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { SWAP_ANIMATION_DURATION_IN_SECOND } from "../../Constant/AnimationConstant";
+import { TABLE_ROW_HEIGHT_IN_PX } from "../../Constant/SizeConstant";
 
 const TableContainer = styled.div<{ height?: string }>`
     height: ${props => props.height ? props.height : '500px'};
@@ -13,15 +14,11 @@ const TableContainer = styled.div<{ height?: string }>`
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);
 `;
-const TableRow = styled.div.attrs((props: { top: number, order: number }) => {
-    return {
-        id: `TableRow_${props.order}`
-    }
-})<{ top: number, order: number }>`
+const TableRow = styled.div<{ order: number }>`
     width: 90%;
-    height: 50px;
+    height: ${TABLE_ROW_HEIGHT_IN_PX}px;
     position: absolute;
-    top: ${props => props.top}px;
+    top: ${props => props.order * TABLE_ROW_HEIGHT_IN_PX}px;
     left: 50%;
     -webkit-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
